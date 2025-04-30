@@ -37,6 +37,17 @@ model DataUpload {
   @@map("data_uploads")
 }
 
+model Product {
+  id           String   @id @default(uuid())
+  name         String
+  price        Int
+  stock        Int
+  dataUploadId String
+  createdAt    DateTime @default(now())
+
+  @@map("products")
+}
+
 enum UploadStatus {
   PENDING
   SUCCESS
