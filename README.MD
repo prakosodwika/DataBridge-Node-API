@@ -51,7 +51,7 @@ Seed Data
     npm run seed
 
 
-### 5. Menjalankan Development Server
+### 5. Run Development Server
 
     npm run dev
 
