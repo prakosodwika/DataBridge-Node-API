@@ -2,6 +2,8 @@ import { INTERNAL_SERVER_ERROR_SERVICE_RESPONSE, ServiceResponse } from "$entiti
 import Logger from '$pkg/logger';
 import { prisma } from "$utils/prisma.utils";
 import { FilteringQueryV2 } from "$entities/Query";
+import { parseExcelProduct } from "$utils/excel.utils";
+import fs from 'fs';
 
 const THIRTY_SECONDS = 30 * 1000;
 
@@ -30,8 +32,6 @@ export async function paginationFiles(filters: FilteringQueryV2):Promise<Service
       }
     }
 
-    console.log('sinioii');
-    
     const data = await prisma.dataUpload.findMany({
       where,
       skip,
@@ -40,9 +40,6 @@ export async function paginationFiles(filters: FilteringQueryV2):Promise<Service
         [orderKey || 'createdAt']: orderRule || 'asc',
       }
     })
-
-    console.log('data : ', data);
-    
 
     const total = await prisma.dataUpload.count({ where })
 
@@ -71,7 +68,7 @@ export async function fileUpload(file: Express.Multer.File, user: any):Promise<S
         })
 
         setTimeout(() => {
-            processFileInBackground(data.id);
+          processFileInBackground(data.id, file.path);
         }, THIRTY_SECONDS);
 
         return {
@@ -84,25 +81,32 @@ export async function fileUpload(file: Express.Multer.File, user: any):Promise<S
     }
 }
 
-async function processFileInBackground(fileId: string) {
-    try {
-      console.log(`Mulai proses file ID: ${fileId}`);
-  
-      await new Promise(resolve => setTimeout(resolve, 5000));
-  
-      await prisma.dataUpload.update({
+async function processFileInBackground(fileId: string, filePath: string) {
+  try {
+    console.log(`Mulai proses file ID: ${fileId}`);
+    const buffer = fs.readFileSync(filePath)
+    const products = parseExcelProduct(buffer);
+
+    await prisma.$transaction([
+      prisma.product.createMany({
+        data: products.map(product => ({
+          ...product,
+          dataUploadId: fileId
+        }))
+      }),
+      prisma.dataUpload.update({
         where: { id: fileId },
         data: { status: 'SUCCESS', }
-      });
-  
-      console.log(`Selesai proses file ID: ${fileId}`);
-    } catch (err) {
-      console.error(`Gagal proses file ID: ${fileId}`, err);
-      await prisma.dataUpload.update({
-        where: { id: fileId },
-        data: { status: 'FAILED' }
-      });
-    }
+      })
+    ])
+
+    console.log(`Selesai proses file ID: ${fileId}`);
+  } catch (err) {
+    console.error(`Gagal proses file ID: ${fileId}`, err);
+    await prisma.dataUpload.update({
+      where: { id: fileId },
+      data: { status: 'FAILED' }
+    });
   }
-  
+}
 
