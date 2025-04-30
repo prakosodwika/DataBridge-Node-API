@@ -1,9 +1,9 @@
 import { INTERNAL_SERVER_ERROR_SERVICE_RESPONSE, ServiceResponse, BadRequestWithMessage } from "$entities/Service";
 import { UserLoginDTO, UserJWTDAO } from "$entities/User";
+import { generateToken } from "$utils/jsonwebtoken.utils";
 import { prisma } from "$utils/prisma.utils";
 import Logger from '$pkg/logger';
 import bcrypt from 'bcrypt'
-import jwt from 'jsonwebtoken'
 
 export async function login(payloadBody: UserLoginDTO):Promise<ServiceResponse<{}>>{
     try{
@@ -29,7 +29,7 @@ export async function login(payloadBody: UserLoginDTO):Promise<ServiceResponse<{
             role: user.role
         };
 
-        const token = jwt.sign(payloadToken, process.env.JWT_SECRET!, { expiresIn: "1d" });
+        const token = generateToken(payloadToken);
 
         return {
             status:true,
