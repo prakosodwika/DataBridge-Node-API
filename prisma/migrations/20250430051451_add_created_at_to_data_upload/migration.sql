@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `data_uploads` ADD COLUMN `createdAt` DATETIME(3) NOT NULL DEFAULT CURRENT_TIMESTAMP(3);
