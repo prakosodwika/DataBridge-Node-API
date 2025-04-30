@@ -26,25 +26,14 @@ model User {
   createdAt DateTime @default(now())
 }
 
-model Upload {
+model DataUpload {
   id         String    @id @default(uuid())
   filename   String
+  path       String
   status     UploadStatus @default(PENDING)
   uploadedAt DateTime  @default(now())
-  products   Product[]
 
-  @@map("uploads")
-}
-
-model Product {
-  id        String   @id @default(uuid())
-  name      String
-  price     Int
-  stock     Int
-  uploadId  String
-  upload    Upload   @relation(fields: [uploadId], references: [id], onDelete: Cascade)
-
-  @@map("products")
+  @@map("data_uploads")
 }
 
 enum UploadStatus {
