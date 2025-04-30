@@ -32,7 +32,8 @@ model DataUpload {
   path       String
   status     UploadStatus @default(PENDING)
   uploadedAt DateTime  @default(now())
-
+  createdAt  DateTime  @default(now())
+  
   @@map("data_uploads")
 }
 

@@ -5,6 +5,7 @@ import { validateUpload } from "$validations/uploadValidation";
 
 const ProductRoutes = Router({mergeParams:true}) // mergeParams = true -> to enable parsing query params
 
-ProductRoutes.post("/", authentication, validateUpload, ProductController.login)
+ProductRoutes.post("/upload", authentication, validateUpload, ProductController.fileUpload)
+ProductRoutes.post("/files", authentication, ProductController.paginationFiles)
 
 export default ProductRoutes
