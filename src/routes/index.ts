@@ -20,6 +20,8 @@ router.get("/ping", (req: Request, res: Response) => {
 
 
 router.use("/example", RoutesRegistry.ExampleRoutes)
+router.use("/auth", RoutesRegistry.AuthRoutes)
+router.use("/product", RoutesRegistry.ProductRoutes)
 
 
 router.all("*", (req: Request, res: Response) => {
