@@ -12,7 +12,10 @@ Welcome! This is a project submission for the NodeWave Back End Candidate Assess
 
 ## 📄 Project Flow
 
-    1. User uploads an Excel file.
+    1. User uploads an Excel file (template_product.xlsx).
+        - The file can contain product data (e.g., product ID, name, price, quantity, category).
+        - Users can upload an Excel file using the designated upload endpoint.
+        - File Template: The Excel file uploaded should follow the structure of the template_product.xlsx, which can be used to format the product data correctly.
     2. The server responds immediately with a success message and stores the upload record as pending.
     3. The system processes the file asynchronously in the background.
     4. Users can retrieve a list of uploaded files filtered by status and paginated.

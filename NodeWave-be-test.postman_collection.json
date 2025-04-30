@@ -1,0 +1,151 @@
+{
+	"info": {
+		"_postman_id": "77445758-b547-4fbf-8c8e-efee0b2e3719",
+		"name": "NodeWave-be-test",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24186996"
+	},
+	"item": [
+		{
+			"name": "Product",
+			"item": [
+				{
+					"name": "uplaod",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJlbWFpbCI6ImFkbWluQHRlc3QuY29tIiwiZnVsbE5hbWUiOiJBZG1pbiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc0NTk5NDAyNSwiZXhwIjoxNzQ2MDgwNDI1fQ.0cPnPtF9Yr5umj7a1UFapKmAFamTbmH3Ee2R6LsPP8E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/home/dwika/Downloads/dummyData.xlsx"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3150/product/upload",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3150",
+							"path": [
+								"product",
+								"upload"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "files",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjEiLCJlbWFpbCI6ImFkbWluQHRlc3QuY29tIiwiZnVsbE5hbWUiOiJBZG1pbiIsInJvbGUiOiJBRE1JTiIsImlhdCI6MTc0NTk5NDAyNSwiZXhwIjoxNzQ2MDgwNDI1fQ.0cPnPtF9Yr5umj7a1UFapKmAFamTbmH3Ee2R6LsPP8E",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": []
+						},
+						"url": {
+							"raw": "http://localhost:3150/product/files?page=1&rows=10&orderKey=createdAt&orderRule=desc",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3150",
+							"path": [
+								"product",
+								"files"
+							],
+							"query": [
+								{
+									"key": "filters",
+									"value": "{\"status\":\"PENDING\"}",
+									"disabled": true
+								},
+								{
+									"key": "searchFilters",
+									"value": "{\"filename\":\"report\"}",
+									"disabled": true
+								},
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "rows",
+									"value": "10"
+								},
+								{
+									"key": "orderKey",
+									"value": "createdAt"
+								},
+								{
+									"key": "orderRule",
+									"value": "desc"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@test.com\",\n    \"password\": \"admin123\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3150/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3150",
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
