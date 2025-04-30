@@ -1,7 +1,7 @@
 import { Router } from "express";
 import * as AuthController from "$controllers/rest/AuthController"
 
-const AuthRoutes = Router({mergeParams:true}) // mergeParams = true -> to enable parsing query params
+const AuthRoutes = Router({mergeParams:true})
 
 AuthRoutes.post("/login", AuthController.login)
 

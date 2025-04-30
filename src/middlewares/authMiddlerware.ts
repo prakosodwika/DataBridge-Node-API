@@ -1,10 +1,9 @@
-import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
 import { response_unauthorized } from "$utils/response.utils";
-import Logger from "$pkg/logger"; 
+import { Request, Response, NextFunction } from "express";
+import { verifyToken } from "$utils/jsonwebtoken.utils";
 import { UserJWTDAO } from "$entities/User";
+import Logger from "$pkg/logger"; 
 
-// Extend Request untuk menyimpan data user dari token
 declare module "express-serve-static-core" {
   interface Request {
     user?: UserJWTDAO;
@@ -25,9 +24,7 @@ export const authentication = (
   const token = authHeader.split(" ")[1];
 
   try {
-    const secret = process.env.JWT_SECRET as string;
-    const decoded = jwt.verify(token, secret) as UserJWTDAO;
-    req.user = decoded;
+    req.user = verifyToken(token);
     next();
   } catch (err) {
     Logger.warn("AuthMiddleware.authentication", err);
