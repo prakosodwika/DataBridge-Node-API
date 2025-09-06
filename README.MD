@@ -1,6 +1,6 @@
-# 📦 NodeWave Back End Candidate Assessment
+# 📦 Back End API
 
-Welcome! This is a project submission for the NodeWave Back End Candidate Assessment. The goal of this task is to build a backend API that supports Excel file uploads, background data processing, JWT authentication, and provides filterable and paginated endpoints.
+Backend API untuk mengelola upload file Excel, parsing data produk, autentikasi dengan JWT, serta menyediakan endpoint dengan filtering dan pagination.
 
 ## ✨ Features
 
